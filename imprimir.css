@@ -1,0 +1,47 @@
+/* Sin "size": así el cuadro de impresión deja elegir vertical u horizontal. */
+@page { margin: 10mm; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Calibri, Arial, sans-serif;
+  font-size: 11pt;
+  color: #000;
+  background: #fff;
+}
+
+/* ── Documento: solo existe para imprimirlo; en pantalla la ventana queda en
+   blanco hasta que la vista previa de impresión la ocupa ──────────────── */
+@media screen { #documento { display: none; } }
+#asunto { font-size: 14pt; margin: 0 0 8px; }
+#cabecera { border-collapse: collapse; margin-bottom: 12px; font-size: 10pt; }
+#cabecera th { text-align: left; padding: 1px 10px 1px 0; vertical-align: top; white-space: nowrap; }
+#cabecera td { padding: 1px 0; }
+#cuerpo { border-top: 1px solid #000; padding-top: 10px; }
+
+/* ── Ajuste al ancho de la página: la clave para que nada se corte ────── */
+.correo, .correo * {
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+.correo table {
+  table-layout: auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+}
+.correo td, .correo th {
+  width: auto !important;
+  min-width: 0 !important;
+  white-space: normal !important;
+  overflow-wrap: break-word;   /* only splits words that don't fit on their own */
+}
+.correo img {
+  height: auto !important;
+}
+.correo pre {
+  white-space: pre-wrap !important;
+}
+
+/* ── Impresión ────────────────────────────────────────────────────────── */
+@media print {
+  .correo tr, .correo img { page-break-inside: avoid; break-inside: avoid; }
+}
