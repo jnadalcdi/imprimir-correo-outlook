@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Complemento web de Outlook "Imprimir correo".
+  __BASE_URL__ (URL HTTPS donde se publica la carpeta web\) y __BASE_ORIGIN__
+  (solo el dominio de esa URL) los sustituye preparar.ps1.  No editar a mano.
+-->
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+           xsi:type="MailApp">
+  <Id>365c5906-4b38-44fb-a694-3c6fed11b4bd</Id>
+  <Version>1.0.2.0</Version>
+  <ProviderName>CDI Ibense</ProviderName>
+  <DefaultLocale>es-ES</DefaultLocale>
+  <DisplayName DefaultValue="Imprimir correo" />
+  <Description DefaultValue="Imprime el correo con las tablas y las imágenes ajustadas al ancho de la página, sin cortes." />
+  <IconUrl DefaultValue="__BASE_URL__/iconos/v2/imprimir-64.png" />
+  <HighResolutionIconUrl DefaultValue="__BASE_URL__/iconos/v2/imprimir-128.png" />
+  <SupportUrl DefaultValue="__BASE_URL__/funciones.html" />
+  <AppDomains>
+    <AppDomain>__BASE_ORIGIN__</AppDomain>
+  </AppDomains>
+  <Hosts>
+    <Host Name="Mailbox" />
+  </Hosts>
+  <Requirements>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.8" />
+    </Sets>
+  </Requirements>
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="__BASE_URL__/funciones.html" />
+        <RequestedHeight>450</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+  <Permissions>ReadItem</Permissions>
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read" />
+  </Rule>
+  <DisableEntityHighlighting>true</DisableEntityHighlighting>
+
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Requirements>
+      <bt:Sets DefaultMinVersion="1.8">
+        <bt:Set Name="Mailbox" />
+      </bt:Sets>
+    </Requirements>
+    <Hosts>
+      <Host xsi:type="MailHost">
+        <DesktopFormFactor>
+          <!-- Página sin interfaz donde vive la función del botón -->
+          <FunctionFile resid="funcUrl" />
+          <!-- Botón en la cinta cuando se lee un correo (panel de lectura o ventana propia) -->
+          <ExtensionPoint xsi:type="MessageReadCommandSurface">
+            <OfficeTab id="TabDefault">
+              <Group id="grpImprimir">
+                <Label resid="grpLabel" />
+                <Control xsi:type="Button" id="btnImprimir">
+                  <Label resid="btnLabel" />
+                  <Supertip>
+                    <Title resid="btnLabel" />
+                    <Description resid="btnTip" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="icon16" />
+                    <bt:Image size="20" resid="icon20" />
+                    <bt:Image size="24" resid="icon24" />
+                    <bt:Image size="32" resid="icon32" />
+                    <bt:Image size="40" resid="icon40" />
+                    <bt:Image size="48" resid="icon48" />
+                    <bt:Image size="64" resid="icon64" />
+                    <bt:Image size="80" resid="icon80" />
+                  </Icon>
+                  <!-- Sin panel: ejecuta la función, que abre la ventana de impresión -->
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>imprimirCorreo</FunctionName>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+    <Resources>
+      <bt:Images>
+        <bt:Image id="icon16" DefaultValue="__BASE_URL__/iconos/v2/imprimir-16.png" />
+        <bt:Image id="icon20" DefaultValue="__BASE_URL__/iconos/v2/imprimir-20.png" />
+        <bt:Image id="icon24" DefaultValue="__BASE_URL__/iconos/v2/imprimir-24.png" />
+        <bt:Image id="icon32" DefaultValue="__BASE_URL__/iconos/v2/imprimir-32.png" />
+        <bt:Image id="icon40" DefaultValue="__BASE_URL__/iconos/v2/imprimir-40.png" />
+        <bt:Image id="icon48" DefaultValue="__BASE_URL__/iconos/v2/imprimir-48.png" />
+        <bt:Image id="icon64" DefaultValue="__BASE_URL__/iconos/v2/imprimir-64.png" />
+        <bt:Image id="icon80" DefaultValue="__BASE_URL__/iconos/v2/imprimir-80.png" />
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="funcUrl" DefaultValue="__BASE_URL__/funciones.html" />
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="grpLabel" DefaultValue="Imprimir" />
+        <bt:String id="btnLabel" DefaultValue="Imprimir correo" />
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="btnTip" DefaultValue="Imprime el correo con las tablas y las imágenes ajustadas al ancho de la página, sin cortes." />
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>
